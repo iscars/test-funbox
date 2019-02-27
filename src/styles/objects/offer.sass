@@ -1,0 +1,61 @@
+.offer
+  height: 100%
+
+  &__body
+    height: inherit
+    padding-left: 46px
+    background:
+      image: url("../images/cat.png")
+      repeat: no-repeat
+      size: 118%
+      position: 50% 192%
+
+  &__segment
+    padding-top: 18px
+    color: $text-offer-color
+
+  &__tip
+    padding-top: 18px
+    color: $tip-color
+
+  &__name
+    padding-top: 6px
+    font:
+      size: 48px
+      weight: bold
+    color: #000
+
+  &__description
+    font:
+      size: 24px
+      weight: bold
+    color: #000
+
+  &__specs
+    padding:
+      top: 14px 
+      left: 0
+    list-style: none
+    font-size: 14px
+    color: $text-offer-color
+
+  &__quantity
+    position: absolute
+    right: 12px
+    bottom: 12px
+    width: 80px
+    height: 80px
+    border-radius: 50%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    line-height: 1
+    background-color: $brand-primary
+
+    &-lg
+      font-size: 42px
+
+    &-sm
+      margin-top: -2px
+      font-size: 21px

@@ -1,0 +1,181 @@
+.card
+  $root: &
+  position: relative
+
+  &__panel
+    position: relative
+    display: flex
+    width: $panel-width
+    height: $panel-height - $panel-corner-size
+    margin-top: $panel-corner-size
+    border:
+      bottom-left-radius: $panel-border-radius
+      bottom-right-radius: $panel-border-radius
+    background-color: $brand-primary
+
+    &:before
+      content: ''
+      position: absolute
+      top: - $panel-corner-size
+      right: $panel-border-radius
+      left: 0
+      border:
+        width: 0 0 $panel-corner-size $panel-corner-size
+        style: solid
+        color: transparent transparent $brand-primary transparent
+
+    &:after
+      content: ''
+      position: absolute
+      top: - $panel-corner-size
+      right: 0
+      width: $panel-border-radius
+      height: $panel-corner-size
+      border-top-right-radius: $panel-border-radius
+      background-color: $brand-primary
+
+    &-inner
+      position: relative
+      width: 100%
+      margin: $panel-border-width
+      border:
+        bottom-left-radius: $panel-border-radius / 1.25
+        bottom-right-radius: $panel-border-radius / 1.25
+      background-color: $panel-bg
+
+      &:before
+        content: ''
+        position: absolute
+        z-index: 1
+        top: - $panel-corner-size
+        right: $panel-border-radius / 1.25
+        left: $panel-border-width / -2
+        border:
+          width: 0 0 $panel-corner-size $panel-corner-size
+          style: solid
+          color: transparent transparent $panel-bg transparent
+
+      &:after
+        content: ''
+        position: absolute
+        z-index: 1
+        top: - $panel-corner-size
+        right: 0
+        width: $panel-border-radius / 1.25
+        height: $panel-corner-size
+        border-top-right-radius: $panel-border-radius / 1.25
+        background-color: $panel-bg
+
+      &-corner
+        position: relative
+        z-index: 2
+        width: $panel-border-width
+        height: $panel-border-width
+        margin:
+          top: - $panel-border-width
+          left: - $panel-border-width
+        background-color: $brand-primary
+
+  &__body
+    position: absolute
+    z-index: 2
+    top: - $panel-corner-size + $panel-border-width
+    right: $panel-border-width
+    bottom: $panel-border-width
+    left: $panel-border-width
+    border-radius: $panel-border-radius / 1.25
+    overflow: hidden
+
+  &__notes
+    margin:
+      top: 16px
+      bottom: -30px
+    font-size: 13px
+    text-align: center
+
+  &__label-notes
+    cursor: pointer
+    border-bottom: 1px dashed $link-color
+    color: $link-color
+
+  &__label-content
+    position: relative
+    display: block
+    cursor: pointer
+    user-select: none
+
+    &.disabled
+      cursor: not-allowed
+
+      #{$root}
+        &__panel
+          background-color: $disabled-color
+
+          &:before
+            border-bottom-color: $disabled-color
+
+          &:after, &-inner-corner
+            background-color: $disabled-color
+
+        &__offer-body
+          opacity: 0.5
+
+        &__quantity
+          background-color: $disabled-color
+
+    &:hover:not(.disabled)
+      #{$root}
+        &__panel
+          background-color: $brand-primary-light
+
+          &:before
+            border-bottom-color: $brand-primary-light
+
+          &:after, &-inner-corner
+            background-color: $brand-primary-light
+
+        &__quantity
+          background-color: $brand-primary-light
+
+  &__input
+    position: absolute
+    opacity: 0
+
+    &:checked
+      ~ #{$root}
+        &__label-content
+          #{$root}
+            &__panel
+              background-color: $brand-secondary
+
+              &:before
+                border-bottom-color: $brand-secondary
+
+              &:after, &-inner-corner
+                background-color: $brand-secondary
+
+            &__quantity
+              background-color: $brand-secondary
+
+            &__checked-hover
+              display: none
+
+          &:hover
+            #{$root}
+              &__panel
+                background-color: $brand-secondary-light
+
+                &:before
+                  border-bottom-color: $brand-secondary-light
+
+                &:after, &-inner-corner
+                  background-color: $brand-secondary-light
+
+              &__quantity
+                background-color: $brand-secondary-light
+
+              &__checked-hover
+                display: block
+
+              &__checked-not-hover
+                display: none

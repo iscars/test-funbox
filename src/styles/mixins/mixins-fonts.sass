@@ -1,0 +1,9 @@
+@function font_url($path)
+  @return url('../fonts/#{$path}')
+
+=font-face ($family, $filepath, $filename, $style, $weight)
+  @font-face
+    font-family: $family
+    font-style: $style
+    font-weight: $weight
+    src: font_url('#{$filename}.otf') format('opentype'), font_url('#{$filename}.woff') format('woff')

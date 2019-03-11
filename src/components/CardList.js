@@ -4,15 +4,18 @@ import {moduleName, fetchGoods, eventListSelector, selectEvent} from '../redux/d
 import Card from './Card'
 
 class Root extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchGoods()
+    }
+
+    componentDidUpdate() {
+        console.log(this.props.selected.toJS())
     }
 
     render() {
         if (this.props.loading) return <div>Loading goods list...</div>
         if (this.props.error) return <div>Failed to load data</div>
         const goodList = this.getGoods(this.props.goods)
-        console.log(this.props.selected.toJS())
 
         return (
             <ul className="grid">

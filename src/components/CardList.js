@@ -10,6 +10,7 @@ class Root extends Component {
 
     render() {
         if (this.props.loading) return <div>Loading goods list...</div>
+        if (this.props.error) return <div>Failed to load data</div>
         const goodList = this.getGoods(this.props.goods)
         console.log(this.props.selected.toJS())
 
@@ -36,5 +37,6 @@ class Root extends Component {
 export default connect(state => ({
     goods: eventListSelector(state),
     loading: state[moduleName].loading,
+    error: state[moduleName].error,
     selected: state[moduleName].selected
 }), {fetchGoods, selectEvent})(Root)

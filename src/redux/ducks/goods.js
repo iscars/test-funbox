@@ -1,4 +1,4 @@
-import {all, put, takeEvery} from 'redux-saga/effects'
+import {all, call, put, takeEvery} from 'redux-saga/effects'
 import {Record, OrderedSet} from 'immutable'
 import {createSelector} from 'reselect'
 import {goodsDB} from '../../fake-db/goods'
@@ -9,13 +9,15 @@ export const moduleName = 'goods'
 const prefix = moduleName
 export const FETCH_REQUEST = `${prefix}/FETCH_REQUEST`
 export const FETCH_SUCCESS = `${prefix}/FETCH_SUCCESS`
+export const FETCH_ERROR = `${prefix}/FETCH_ERROR`
 export const SELECT_EVENT = `${prefix}/SELECT_EVENT`
 
 
 export const ReducerRecord = Record({
     goods: new OrderedSet([]),
     selected: new OrderedSet([]),
-    loading: false
+    loading: false,
+    error: false
 })
 
 export const EventRecord = Record({
@@ -42,6 +44,12 @@ export default function reducer(state = new ReducerRecord(), action) {
                 .set('loading', false)
                 .set('goods', dataToEntities(payload, EventRecord))
 
+        case FETCH_ERROR:
+            console.error(payload)
+            return state
+                .set('loading', false)
+                .set('error', true)
+
         case SELECT_EVENT:
             return state.selected.contains(payload.id)
                 ? state.update('selected', selected => selected.remove(payload.id))
@@ -65,11 +73,18 @@ export function fetchGoods() {
 }
 
 export const fetchGoodsSaga = function * () {
-    const data = goodsDB
-    yield put({
-        type: FETCH_SUCCESS,
-        payload: data
-    })
+    try {
+        const response = yield call(() => goodsDB)
+        yield put({
+            type: FETCH_SUCCESS,
+            payload: response
+        })
+    } catch (error) {
+        yield put({
+            type: FETCH_ERROR,
+            payload: error
+        })
+    }
 }
 
 export function selectEvent(id) {

@@ -94,8 +94,10 @@ class Card extends Component {
     )
 
     handleChange = () => {
-        this.setState({checked: !this.state.checked})
-        this.state.checked && this.setState({checkedHover: false})
+        this.setState({
+            checked: !this.state.checked,
+            checkedHover: false
+        })
         this.props.selectEvent(this.props.event.id)
     }
 
